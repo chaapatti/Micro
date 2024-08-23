@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 typedef struct Value {
     float data;
     float grad;
@@ -41,10 +42,18 @@ Value *mul(Value*self, Value*other) {
 }
 
 Value* power(Value* self, Value * other) {
-
+    Value*newPower = (Value*)malloc(sizeof(Value));
+    newPower->data = pow(self->data, other->data);
+    Value **children = (Value**)malloc(sizeof(Value*)*2);
+    children[0] = self;
+    children[1] = other;
+    newPower->operator = '*';
+    newPower->prev = children;
+    return newPower;
 }
 
-
+// COncept of function pointers what are they and 
+int (*functionptr)(int, int);
 
 int main() {
     Value a = {2.0, 0.0, NULL};
